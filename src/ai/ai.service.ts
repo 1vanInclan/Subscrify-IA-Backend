@@ -13,7 +13,16 @@ export class AiService implements OnModuleInit {
   ) {}
 
   onModuleInit() {
-    const apiKey = this.configService.get<string>('GEMINI_API_KEY');
+    const apiKey =
+      this.configService.get<string>('GEMINI_API_KEY') ||
+      process.env.GEMINI_API_KEY;
+
+    if (!apiKey) {
+      throw new Error(
+        'GEMINI_API_KEY no encontrada en las variables de entorno.',
+      );
+    }
+
     this.ai = new GoogleGenAI({ apiKey });
   }
 

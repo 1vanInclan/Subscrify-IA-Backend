@@ -7,6 +7,7 @@ import { Subscription } from './subscriptions/entities/subscription.entity.js';
 import { AuthModule } from './auth/auth.module.js';
 import { SubscriptionsModule } from './subscriptions/subscriptions.module.js';
 import { UsersModule } from './users/users.module.js';
+import { AiModule } from './ai/ai.module.js';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { UsersModule } from './users/users.module.js';
     AuthModule,
     UsersModule,
     SubscriptionsModule,
+    AiModule,
   ],
 })
 export class AppModule {}

@@ -1,5 +1,5 @@
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm"
-import { User } from "../../users/entities/user.entity.js"
+import type { User } from "../../users/entities/user.entity.js"
 
 export enum SubscriptionStatus {
   ACTIVE = 'ACTIVE',
@@ -46,7 +46,7 @@ export class Subscription {
   @Column({ nullable: true })
   category: string;
 
-  @ManyToOne(() => User, (user) => user.subscriptions, { onDelete: 'CASCADE' })
+  @ManyToOne('User', (user: User) => user.subscriptions, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'userId' })
   user: User;
 

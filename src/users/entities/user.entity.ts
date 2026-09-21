@@ -1,5 +1,5 @@
 import {Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn} from 'typeorm';
-import { Subscription } from '../../subscriptions/entities/subscription.entity.js';
+import type { Subscription } from '../../subscriptions/entities/subscription.entity.js';
 
 @Entity('users')
 export class User {
@@ -15,7 +15,7 @@ export class User {
   @Column({ nullable: true })
   fullName: string;
 
-  @OneToMany(() => Subscription, (sub) => sub.user)
+  @OneToMany('Subscription', (sub: Subscription) => sub.user)
   subscriptions: Subscription[];
 
   @CreateDateColumn()

@@ -4,10 +4,14 @@ import {
   BillingPeriod,
   SubscriptionStatus,
 } from '../subscriptions/entities/subscription.entity.js';
+import { DocumentsService } from '../documents/documents.service.js';
 
 @Injectable()
 export class AiToolsService {
-  constructor(private readonly subscriptionsService: SubscriptionsService) {}
+  constructor(
+    private readonly subscriptionsService: SubscriptionsService,
+    private readonly documentsService: DocumentsService
+  ) {}
 
   /**
    * Tool 1: Obtener suscripciones activas del usuario
@@ -90,6 +94,30 @@ export class AiToolsService {
       success: true,
       message: `La suscripción a ${updated.name} ha sido marcada como CANCELLED.`,
       subscription: updated,
+    };
+  }
+
+  async searchKnowledgeBase(userId: string, args: { query: string }) {
+    const results = await this.documentsService.searchSimilar(
+      userId,
+      args.query,
+      3,
+    );
+
+    if (!results || results.length === 0) {
+      return {
+        found: false,
+        message: 'No se encontraron documentos o notas relevantes.',
+      };
+    }
+
+    return {
+      found: true,
+      documents: results.map((doc: any) => ({
+        title: doc.title,
+        content: doc.content,
+        category: doc.category,
+      })),
     };
   }
 }

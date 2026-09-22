@@ -4,9 +4,10 @@ import { AiController } from './ai.controller.js';
 import { AiToolsService } from './ai-tools.service.js';
 import { SubscriptionsModule } from '../subscriptions/subscriptions.module.js';
 import { AuthModule } from '../auth/auth.module.js';
+import { DocumentsModule } from '../documents/documents.module.js';
 
 @Module({
-  imports: [SubscriptionsModule, AuthModule],
+  imports: [SubscriptionsModule, AuthModule, DocumentsModule],
   controllers: [AiController],
   providers: [AiService, AiToolsService],
   exports: [AiService],

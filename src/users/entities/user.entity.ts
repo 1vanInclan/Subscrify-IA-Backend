@@ -1,5 +1,6 @@
 import {Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn} from 'typeorm';
 import type { Subscription } from '../../subscriptions/entities/subscription.entity.js';
+import type { Document } from '../../documents/entities/document.entity.js';
 
 @Entity('users')
 export class User {
@@ -17,6 +18,9 @@ export class User {
 
   @OneToMany('Subscription', (sub: Subscription) => sub.user)
   subscriptions: Subscription[];
+
+  @OneToMany('Document', (doc: any) => doc.user)
+  documents: Document[];
 
   @CreateDateColumn()
   createdAt: Date;

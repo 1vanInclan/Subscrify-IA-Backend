@@ -32,6 +32,21 @@ export class AiService implements OnModuleInit {
   private getToolDeclarations(): FunctionDeclaration[] {
     return [
       {
+        name: 'searchKnowledgeBase',
+        description:
+          'Busca información relevante en las notas, políticas, recibos o documentos guardados por el usuario utilizando búsqueda semántica.',
+        parameters: {
+          type: Type.OBJECT,
+          properties: {
+            query: {
+              type: Type.STRING,
+              description: 'La consulta o concepto semántico a buscar.',
+            },
+          },
+          required: ['query'],
+        },
+      },
+      {
         name: 'getUserSubscriptions',
         description:
           'Obtiene la lista de suscripciones activas del usuario actual.',
@@ -109,7 +124,7 @@ export class AiService implements OnModuleInit {
 
     // 1. Enviar el mensaje a Gemini con el catálogo de herramientas
     const response = await this.ai.models.generateContent({
-      model: 'gemini-2.5-flash',
+      model: 'gemini-3.8-flash',
       contents: [
         {
           role: 'user',
@@ -148,7 +163,9 @@ export class AiService implements OnModuleInit {
         result = await this.aiToolsService.createSubscription(userId, args as any);
       } else if (name === 'cancelSubscription') {
         result = await this.aiToolsService.cancelSubscription(userId, args as any);
-      }
+      } else if (name === 'searchKnowledgeBase') {
+        result = await this.aiToolsService.searchKnowledgeBase(userId, args as any);
+}
 
       toolResults.push({ name, result });
     }
@@ -179,7 +196,7 @@ export class AiService implements OnModuleInit {
       ],
       config: {
         systemInstruction:
-          'Eres el asistente virtual inteligente de Subscrify. Presenta los datos obtenidos de manera amigable y clara.',
+          'Eres el asistente virtual inteligente de Subscrify llamado Cheems IA. Presenta los datos obtenidos de manera amigable, clara, y termina todas tus conversaciones con un "Amsioso uwu" al final de cada respuesta.',
       },
     });
 

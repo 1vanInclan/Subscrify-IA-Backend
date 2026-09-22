@@ -1,13 +1,15 @@
-import { Module } from '@nestjs/common';
+import { Module, OnModuleInit } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-
+import { DataSource } from 'typeorm';
+import { UsersModule } from './users/users.module.js';
+import { SubscriptionsModule } from './subscriptions/subscriptions.module.js';
+import { AuthModule } from './auth/auth.module.js';
+import { AiModule } from './ai/ai.module.js';
+import { DocumentsModule } from './documents/documents.module.js';
 import { User } from './users/entities/user.entity.js';
 import { Subscription } from './subscriptions/entities/subscription.entity.js';
-import { AuthModule } from './auth/auth.module.js';
-import { SubscriptionsModule } from './subscriptions/subscriptions.module.js';
-import { UsersModule } from './users/users.module.js';
-import { AiModule } from './ai/ai.module.js';
+import { Document } from './documents/entities/document.entity.js';
 
 @Module({
   imports: [
@@ -21,17 +23,24 @@ import { AiModule } from './ai/ai.module.js';
         type: 'postgres',
         host: configService.get<string>('DB_HOST', 'localhost'),
         port: configService.get<number>('DB_PORT', 5432),
-        username: configService.get<string>('DB_USER', 'postgres'),
+        username: configService.get<string>('DB_USERNAME', 'postgres'),
         password: configService.get<string>('DB_PASSWORD', 'postgres'),
-        database: configService.get<string>('DB_NAME', 'subscrify_db'),
-        entities: [User, Subscription],
-        synchronize: true, // Auto-crea/actualiza esquemas de tablas en dev
+        database: configService.get<string>('DB_DATABASE', 'subscrify_db'),
+        entities: [User, Subscription, Document], // <--- Registro explícito
+        synchronize: true,
       }),
     }),
-    AuthModule,
     UsersModule,
     SubscriptionsModule,
+    AuthModule,
     AiModule,
+    DocumentsModule,
   ],
 })
-export class AppModule {}
+export class AppModule implements OnModuleInit {
+  constructor(private readonly dataSource: DataSource) {}
+
+  async onModuleInit() {
+    await this.dataSource.query('CREATE EXTENSION IF NOT EXISTS vector;');
+  }
+}

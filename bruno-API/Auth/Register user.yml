@@ -1,0 +1,30 @@
+info:
+  name: Register user
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: http://localhost:3000/api/auth/register
+  headers:
+    - name: Content-Type
+      value: application/json
+  body:
+    type: json
+    data: "{\r
+
+      \  \"email\": \"ivan@subscrify.dev\",\r
+
+      \  \"password\": \"password123\",\r
+
+      \  \"fullName\": \"Ivan Backend Dev\"\r
+
+      }"
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false

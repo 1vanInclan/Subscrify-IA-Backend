@@ -1,0 +1,631 @@
+{
+  "info": {
+    "name": "Subscrify-IA",
+    "description": null,
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register user",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": "",
+                "disabled": false,
+                "type": "default"
+              }
+            ],
+            "description": "",
+            "url": {
+              "raw": "http://localhost:3000/api/auth/register",
+              "protocol": "http",
+              "host": [
+                "localhost:3000"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "register"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"email\": \"ivan@subscrify.dev\",\r\n  \"password\": \"password123\",\r\n  \"fullName\": \"Ivan Backend Dev\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Login user",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": "",
+                "disabled": false,
+                "type": "default"
+              }
+            ],
+            "description": "",
+            "url": {
+              "raw": "http://localhost:3000/api/auth/login",
+              "protocol": "http",
+              "host": [
+                "localhost:3000"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"email\": \"ivan@subscrify.dev\",\r\n  \"password\": \"password123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Subscriptions",
+      "item": [
+        {
+          "name": "Create Subscriptions",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": "",
+                "disabled": false,
+                "type": "default"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlOGU1YWE5NS04ZWQ3LTQ3YWItOGZlZS01NzBlZjk3OWM4ZDAiLCJlbWFpbCI6Iml2YW5Ac3Vic2NyaWZ5LmRldiIsImlhdCI6MTc5MDAzMDUzNywiZXhwIjoxNzkwNjM1MzM3fQ.jaNCcs55Ytk7oWXXvhiAwfsiuDbTq6TfrQDD_fqtYHc",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "",
+            "url": {
+              "raw": "http://localhost:3000/api/subscriptions",
+              "protocol": "http",
+              "host": [
+                "localhost:3000"
+              ],
+              "path": [
+                "api",
+                "subscriptions"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"ChatGPT Plus\",\n    \"price\": 20.00,\n    \"currency\": \"USD\",\n    \"billingPeriod\": \"MONTHLY\",\n    \"status\": \"CANCELLED\",\n    \"nextBillingDate\": \"2026-09-15\",\n    \"category\": \"Productivity\"\n  }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Get Subscriptions by User",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer ",
+                "description": "",
+                "disabled": true,
+                "type": "default"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlOGU1YWE5NS04ZWQ3LTQ3YWItOGZlZS01NzBlZjk3OWM4ZDAiLCJlbWFpbCI6Iml2YW5Ac3Vic2NyaWZ5LmRldiIsImlhdCI6MTc5MDAzMDUzNywiZXhwIjoxNzkwNjM1MzM3fQ.jaNCcs55Ytk7oWXXvhiAwfsiuDbTq6TfrQDD_fqtYHc",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "",
+            "url": {
+              "raw": "http://localhost:3000/api/subscriptions",
+              "protocol": "http",
+              "host": [
+                "localhost:3000"
+              ],
+              "path": [
+                "api",
+                "subscriptions"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Chat IA",
+      "item": [
+        {
+          "name": "Message 1",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": "",
+                "disabled": false,
+                "type": "default"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer ",
+                "description": "",
+                "disabled": true,
+                "type": "default"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlOGU1YWE5NS04ZWQ3LTQ3YWItOGZlZS01NzBlZjk3OWM4ZDAiLCJlbWFpbCI6Iml2YW5Ac3Vic2NyaWZ5LmRldiIsImlhdCI6MTc5MDAzMjY2MywiZXhwIjoxNzkwNjM3NDYzfQ.u85UAFAh2jB4lMAB_ySeioTCp1cYe5w_F2vKIIDX1aI",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "",
+            "url": {
+              "raw": "http://localhost:3000/api/ai/chat",
+              "protocol": "http",
+              "host": [
+                "localhost:3000"
+              ],
+              "path": [
+                "api",
+                "ai",
+                "chat"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"message\": \"¿Cuáles son mis suscripciones activas actualmente?\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "message 2",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": "",
+                "disabled": false,
+                "type": "default"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer ",
+                "description": "",
+                "disabled": true,
+                "type": "default"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlOGU1YWE5NS04ZWQ3LTQ3YWItOGZlZS01NzBlZjk3OWM4ZDAiLCJlbWFpbCI6Iml2YW5Ac3Vic2NyaWZ5LmRldiIsImlhdCI6MTc5MDAzMjY2MywiZXhwIjoxNzkwNjM3NDYzfQ.u85UAFAh2jB4lMAB_ySeioTCp1cYe5w_F2vKIIDX1aI",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "",
+            "url": {
+              "raw": "http://localhost:3000/api/ai/chat",
+              "protocol": "http",
+              "host": [
+                "localhost:3000"
+              ],
+              "path": [
+                "api",
+                "ai",
+                "chat"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"message\": \"¿Cuánto estoy gastando en total al mes en mis servicios?\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "message 3",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": "",
+                "disabled": false,
+                "type": "default"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer ",
+                "description": "",
+                "disabled": true,
+                "type": "default"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlOGU1YWE5NS04ZWQ3LTQ3YWItOGZlZS01NzBlZjk3OWM4ZDAiLCJlbWFpbCI6Iml2YW5Ac3Vic2NyaWZ5LmRldiIsImlhdCI6MTc5MDAzMjY2MywiZXhwIjoxNzkwNjM3NDYzfQ.u85UAFAh2jB4lMAB_ySeioTCp1cYe5w_F2vKIIDX1aI",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "",
+            "url": {
+              "raw": "http://localhost:3000/api/ai/chat",
+              "protocol": "http",
+              "host": [
+                "localhost:3000"
+              ],
+              "path": [
+                "api",
+                "ai",
+                "chat"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"message\": \"Registra una nueva suscripción de GitHub Copilot por 10 dólares al mes en la categoría de Productividad.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "message 4",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": "",
+                "disabled": false,
+                "type": "default"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer ",
+                "description": "",
+                "disabled": true,
+                "type": "default"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlOGU1YWE5NS04ZWQ3LTQ3YWItOGZlZS01NzBlZjk3OWM4ZDAiLCJlbWFpbCI6Iml2YW5Ac3Vic2NyaWZ5LmRldiIsImlhdCI6MTc5MDAzMjY2MywiZXhwIjoxNzkwNjM3NDYzfQ.u85UAFAh2jB4lMAB_ySeioTCp1cYe5w_F2vKIIDX1aI",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "",
+            "url": {
+              "raw": "http://localhost:3000/api/ai/chat",
+              "protocol": "http",
+              "host": [
+                "localhost:3000"
+              ],
+              "path": [
+                "api",
+                "ai",
+                "chat"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"message\": \"Cancela mi suscripción de github copilot.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "message 5",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": "",
+                "disabled": false,
+                "type": "default"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer ",
+                "description": "",
+                "disabled": true,
+                "type": "default"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlOGU1YWE5NS04ZWQ3LTQ3YWItOGZlZS01NzBlZjk3OWM4ZDAiLCJlbWFpbCI6Iml2YW5Ac3Vic2NyaWZ5LmRldiIsImlhdCI6MTc5MDAzMjY2MywiZXhwIjoxNzkwNjM3NDYzfQ.u85UAFAh2jB4lMAB_ySeioTCp1cYe5w_F2vKIIDX1aI",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "",
+            "url": {
+              "raw": "http://localhost:3000/api/ai/chat",
+              "protocol": "http",
+              "host": [
+                "localhost:3000"
+              ],
+              "path": [
+                "api",
+                "ai",
+                "chat"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"message\": \"que pelulas de terror me recomiendas dentro de mis subscripciones\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "message 6 (document test)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": "",
+                "disabled": false,
+                "type": "default"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer ",
+                "description": "",
+                "disabled": true,
+                "type": "default"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlOGU1YWE5NS04ZWQ3LTQ3YWItOGZlZS01NzBlZjk3OWM4ZDAiLCJlbWFpbCI6Iml2YW5Ac3Vic2NyaWZ5LmRldiIsImlhdCI6MTc5MDAzMjY2MywiZXhwIjoxNzkwNjM3NDYzfQ.u85UAFAh2jB4lMAB_ySeioTCp1cYe5w_F2vKIIDX1aI",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "",
+            "url": {
+              "raw": "http://localhost:3000/api/ai/chat",
+              "protocol": "http",
+              "host": [
+                "localhost:3000"
+              ],
+              "path": [
+                "api",
+                "ai",
+                "chat"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"message\": \"¿Sabes qué pasa si cancelo tarde mi membresía del gimnasio?\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Documents",
+      "item": [
+        {
+          "name": "Add document",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": "",
+                "disabled": false,
+                "type": "default"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer ",
+                "description": "",
+                "disabled": true,
+                "type": "default"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlOGU1YWE5NS04ZWQ3LTQ3YWItOGZlZS01NzBlZjk3OWM4ZDAiLCJlbWFpbCI6Iml2YW5Ac3Vic2NyaWZ5LmRldiIsImlhdCI6MTc5MDAzMjY2MywiZXhwIjoxNzkwNjM3NDYzfQ.u85UAFAh2jB4lMAB_ySeioTCp1cYe5w_F2vKIIDX1aI",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "",
+            "url": {
+              "raw": "http://localhost:3000/api/documents",
+              "protocol": "http",
+              "host": [
+                "localhost:3000"
+              ],
+              "path": [
+                "api",
+                "documents"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"title\": \"Política de cancelación de gimnasio FitnessPass\",\r\n  \"content\": \"Para cancelar la membresía de FitnessPass debes avisar con 15 días de anticipación antes de la fecha de corte. Si cancelas después, se cobrará una multa de 15 dólares.\",\r\n  \"category\": \"Gym\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Search document",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer ",
+                "description": "",
+                "disabled": true,
+                "type": "default"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlOGU1YWE5NS04ZWQ3LTQ3YWItOGZlZS01NzBlZjk3OWM4ZDAiLCJlbWFpbCI6Iml2YW5Ac3Vic2NyaWZ5LmRldiIsImlhdCI6MTc5MDAzMjY2MywiZXhwIjoxNzkwNjM3NDYzfQ.u85UAFAh2jB4lMAB_ySeioTCp1cYe5w_F2vKIIDX1aI",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "",
+            "url": {
+              "raw": "http://localhost:3000/api/documents/search?q=cobro%20extra%20por%20darme%20de%20baja",
+              "protocol": "http",
+              "host": [
+                "localhost:3000"
+              ],
+              "path": [
+                "api",
+                "documents",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "cobro%20extra%20por%20darme%20de%20baja"
+                }
+              ],
+              "variable": []
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": []
+}

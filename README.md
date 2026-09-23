@@ -1,124 +1,117 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# 🚀 Subscrify IA API - Backend
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Subscrify es un backend de alto rendimiento para la gestión inteligente de suscripciones y finanzas personales. Integra una arquitectura limpia en NestJS, persistencia relacional y vectorial con PostgreSQL (pgvector), caché distribuida con Redis, y un agente interactivo impulsado por Google Gemini (Cheems IA) capaz de responder preguntas mediante RAG y ejecutar Function Calling.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+---
 
-## Description
+## 🛠️ Tecnologías y Stacks
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- Framework: NestJS (TypeScript)
+- Base de Datos: PostgreSQL + pgvector (Búsqueda semántica & embeddings)
+- ORM: TypeORM
+- Caché & Rate Limiting: Redis + @nestjs/throttler
+- IA / LLM: Google GenAI SDK (gemini-2.5-flash)
+- Autenticación: JWT (JSON Web Tokens) + Bcrypt
+- Documentación & Pruebas API: Bruno (bruno-API/)
+- Contenedores: Docker & Docker Compose
 
-## Project setup
+---
 
-```bash
-$ npm install
-```
+## 🏗️ Arquitectura del Proyecto
 
-## Compile and run the project
+El backend sigue los principios de Clean Architecture estructurado por módulos en NestJS:
 
-```bash
-# development
-$ npm run start
+src/
+├── ai/                 # Módulo de Inteligencia Artificial (Gemini SDK & Tools)
+│   ├── ai-tools.service.ts
+│   ├── ai.controller.ts
+│   └── ai.service.ts
+├── auth/               # Autenticación, JWT, Hash de contraseñas y Guards
+├── common/             # Servicios compartidos (Módulo global de Redis)
+├── documents/          # Ingesta de documentos, generación de embeddings & pgvector
+├── subscriptions/      # CRUD de suscripciones con caché e invalidación en Redis
+├── users/              # Gestión de usuarios
+├── app.module.ts       # Módulo principal y bootstrapping de PostgreSQL/Redis
+└── main.ts             # Punto de entrada de la aplicación
 
-# watch mode
-$ npm run start:dev
+---
 
-# production mode
-$ npm run start:prod
-```
+## ⚡ Características Principales
 
-## Run tests
+### 1. Gestión de Suscripciones & Caché en Redis
+- CRUD Completo: Creación, lectura, actualización y eliminación de suscripciones.
+- In-Memory Caching: Las consultas de suscripciones por usuario (findAllByUser) se almacenan en Redis con un TTL optimizado.
+- Cache Invalidation: Invalidación automática del caché en Redis al crear, actualizar o eliminar registros para garantizar inconsistencia cero.
 
-```bash
-# unit tests
-$ npm run test
+### 2. RAG (Retrieval-Augmented Generation) & Búsqueda Semántica
+- Ingesta de notas, políticas, recibos y documentos del usuario.
+- Generación de vectores de embedding (768 dimensiones) almacenados directamente en PostgreSQL usando la extensión pgvector.
+- Búsqueda por similitud de coseno para recuperar contexto exacto durante las consultas del usuario.
 
-# e2e tests
-$ npm run test:e2e
+### 3. Agente Financiero con IA (Cheems IA)
+- Integración con Google Gemini mediante Function Calling / Tools Declarations.
+- Capacidad de consultar el estado financiero, listar suscripciones, calcular gastos mensuales y crear/cancelar servicios dinámicamente mediante lenguaje natural.
+- Resiliencia y captura limpia de errores de cuota (429 Too Many Requests).
 
-# test coverage
-$ npm run test:cov
-```
+### 4. Seguridad y Protección
+- Autenticación mediante JWT Bearer Tokens.
+- Rate Limiting (Throttling) global y estricto en el endpoint de chat /api/ai/chat para proteger las cuotas del proveedor de IA.
 
-## Deployment
+---
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+## ⚙️ Configuración del Entorno local
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+### 1. Clona el repositorio e instala dependencias:
+git clone https://github.com/tu-usuario/subscrify-backend.git
+cd subscrify-backend
+pnpm install
 
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
-```
+### 2. Configura las variables de entorno:
+Crea un archivo .env basado en la plantilla .env.example:
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+PORT=3000
+NODE_ENV=development
 
-## Observability
+# Database
+DB_HOST=localhost
+DB_PORT=5432
+DB_USERNAME=postgres
+DB_PASSWORD=postgres
+DB_DATABASE=subscrify_db
 
-In production applications, observability is essential for understanding how your system behaves, detecting issues early, and maintaining reliable performance.
+# Redis
+REDIS_HOST=localhost
+REDIS_PORT=6379
 
-[NestJS Observe](https://observe.nestjs.com) automatically instruments your NestJS application, giving you deep visibility into your system with minimal setup:
+# JWT
+JWT_SECRET=tu_jwt_secret_super_seguro
 
-- **Distributed tracing:** Follow requests across services and understand how they flow through your system.
-- **Waterfall analysis:** Visualize request execution and identify slow operations, bottlenecks, and unexpected delays.
-- **Performance analysis:** Analyze application performance in real time and quickly pinpoint areas that need optimization.
-- **Metrics:** Track key application and infrastructure metrics to understand system health and performance trends.
-- **Logging:** Centralize and correlate logs with traces and other telemetry to make debugging easier.
-- **Error tracking:** Detect errors quickly and investigate their root causes with the surrounding context.
-- **SLA monitoring:** Track service-level objectives and identify when your application is approaching or exceeding defined thresholds.
-- **Alarms and alerts:** Set up alerts for critical errors, performance degradation, SLA violations, and other anomalies so your team can react quickly.
+# AI Provider
+GEMINI_API_KEY=tu_gemini_api_key
 
-To add it to this project:
+### 3. Levanta los servicios con Docker:
+docker compose up -d
 
-```bash
-$ npm install @nestjs/observe
-```
+*Esto iniciará los contenedores de PostgreSQL (con pgvector preconfigurado) y Redis.*
 
-Then follow the [setup guide](https://docs.nestjs.com/observability/overview) - it takes a single import and an app key.
+### 4. Inicia la aplicación en modo desarrollo:
+pnpm run start:dev
 
-The free plan needs no payment details and covers 300,000 events a month. You can also browse the [live demo](https://www.observe-demo.nestjs.com/dashboard) first - the whole dashboard over a busy service's data, with nothing to install.
+---
 
-## Resources
+## 🧪 Pruebas de la API
 
-Check out a few resources that may come in handy when working with NestJS:
+Toda la colección de endpoints de la API está documentada e integrada en el repositorio bajo el nombre Subscrify-IA-Collection para su importacion.
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Auto-instrument your application with [NestJS Observe](https://observe.nestjs.com). Distributed tracing, metrics, and logging made easy. Error tracking and performance monitoring for your NestJS applications.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+---
 
-## Support
+## 📌 Principales Endpoints
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+| Método | Endpoint | Descripción |
+| :--- | :--- | :--- |
+| POST | /api/auth/register | Registro de usuario |
+| POST | /api/auth/login | Inicio de sesión y generación de JWT |
+| GET | /api/subscriptions | Obtiene las suscripciones del usuario (vía Redis Cache) |
+| POST | /api/subscriptions | Registra una nueva suscripción (Invalida caché) |
+| POST | /api/documents/ingest | Genera embedding y guarda documento en pgvector |
+| POST | /api/ai/chat | Chat interactivo con Cheems IA (Rate Limited) |
